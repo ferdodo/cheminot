@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - "1112:80"
+
+  frontend-live:
+    build:
+      context: .
+      dockerfile: live.Dockerfile
+    ports:
+      - "1113:5173"

@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"noEmit": true,
+		"allowJs": true,
+		"moduleResolution": "nodenext",
+		"skipLibCheck": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"target": "es6",
+		"paths": {
+		    "@interfaces/*": ["./src/interfaces/*"],
+		    "@utils/*": ["./src/utils/*"],
+		    "@states/*": ["./src/states/*"],
+		    "@components/*": ["./src/components/*"]
+		}
+	}
+}

@@ -1,0 +1,30 @@
+<cookies-panel>
+	<cookies-h1> Cheminot </cookies-h1>
+
+	<cookies-p> Fermez le chemin de fer en orientant les rails. </cookies-p>
+
+	<div class="playground" :style="`width: clamp(10rem, 60vh, 40rem); height: clamp(10rem, 60vh, 40rem); display: grid; grid-template-columns: repeat(${ puzzle().block.w }, 1fr); grid-template-rows: repeat(${ puzzle().block.h }, 1fr);`">
+		<template v-for="line of puzzle().lines">
+			<line-component :style="`grid-area: ${line.block.y+1}/${line.block.x+1}/${line.block.y + line.block.h+1}/${line.block.x + line.block.w+1}`" :id="line.id"></line-component>
+		</template>
+
+		<template v-for="turn of puzzle().turns">
+			<turn-component :style="`grid-area: ${turn.block.y+1}/${turn.block.x+1}/${turn.block.y + turn.block.h+1}/${turn.block.x + turn.block.w+1}`" :id="turn.id"></turn-component>
+		</template>
+
+		<template v-for="intersection of puzzle().intersections">
+			<intersection-component :style="`grid-area: ${intersection.block.y+1}/${intersection.block.x+1}/${intersection.block.y + intersection.block.h+1}/${intersection.block.x + intersection.block.w+1}`" :id="intersection.id"></intersection-component>
+		</template>
+
+		<template v-for="cross of puzzle().crosses">
+			<cross-component :style="`grid-area: ${cross.block.y+1}/${cross.block.x+1}/${cross.block.y + cross.block.h+1}/${cross.block.x + cross.block.w+1}`" :id="cross.id"></cross-component>
+		</template>
+	</div>
+
+	<div v-if="win">
+		<cookies-p style="text-align:center">
+			🎉 C'est gagné pour aujourd'hui ! 🥳 <br>
+			<cookies-button title="Copier dans le presse-papier" @click="share()"> Partager </cookies-button>
+		</cookies-p>
+	</div>
+</cookies-panel>
