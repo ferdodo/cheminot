@@ -1,5 +1,7 @@
 body {
 	background-color: lightblue;
+	background-image: url('background.png');
+	background-size: cover;
 }
 
 div {
