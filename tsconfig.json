@@ -8,6 +8,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"target": "es6",
+		"allowSyntheticDefaultImports": true,
 		"paths": {
 		    "@interfaces/*": ["./src/interfaces/*"],
 		    "@utils/*": ["./src/utils/*"],
