@@ -33,7 +33,7 @@ const app = createApp({
 				if (window.opener?.registerScore) {
 					const moveCount = getMoveCount();
 					//@ts-ignore
-					window.opener.registerScore("cheminot", -moveCount);
+					window.opener.registerScore("cheminot", moveCount);
 					window.close();
 				}
 			}
