@@ -28,6 +28,14 @@ const app = createApp({
 
 			if (!someRailroadOpenned(value)) {
 				win.value = true;
+
+				//@ts-ignore
+				if (window.opener?.registerScore) {
+					const moveCount = getMoveCount();
+					//@ts-ignore
+					window.opener.registerScore("cheminot", -moveCount);
+					window.close();
+				}
 			}
 		});
 
