@@ -8,7 +8,7 @@
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.0",
     "concurrently": "^8.2.0",
-    "cookies-ds": "^1.0.5",
+    "crumbs-design-system": "^1.4.0",
     "esbuild": "^0.17.19",
     "nodemon": "^2.0.22",
     "rxjs": "^7.8.1",

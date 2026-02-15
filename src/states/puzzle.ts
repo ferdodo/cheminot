@@ -1,4 +1,4 @@
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject, interval } from "rxjs";
 import { Puzzle } from "@interfaces/puzzle";
 import { puzzleGenerator } from "@utils/generate-puzzle";
 import { Line } from "@interfaces/line";
@@ -11,12 +11,20 @@ import { IntersectionVariant } from "@interfaces/intersection-variant";
 const puzzleIterator = puzzleGenerator();
 let puzzle: Puzzle = puzzleIterator.next().value;
 let moveCount = 0;
+let timeRemaining = 120;
+let timerSubscription: any = null;
 
 export function getMoveCount(): number {
 	return moveCount;
 }
 
+export function getTimeRemaining(): number {
+	return timeRemaining;
+}
+
 const puzzleMutations$: Subject<Puzzle> = new Subject();
+const timeTick$: Subject<number> = new Subject();
+const gameLostMutations$: Subject<boolean> = new Subject();
 
 async function generatePuzzle() {
 	for (const p of puzzleIterator) {
@@ -24,6 +32,7 @@ async function generatePuzzle() {
 	}
 
 	puzzleMutations$.next(puzzle);
+	startTimer();
 }
 
 generatePuzzle().catch(console.error)
@@ -128,3 +137,42 @@ export const puzzle$: Observable<Puzzle> = new Observable(function(subscriber) {
 		subscriber.next(puzzle);
 	});
 });
+
+export const time$: Observable<number> = new Observable(function(subscriber) {
+	timeTick$.subscribe(function(value) {
+		timeRemaining = value;
+		subscriber.next(value);
+	});
+});
+
+export const gameLost$: Observable<boolean> = new Observable(function(subscriber) {
+	gameLostMutations$.subscribe(function(value) {
+		subscriber.next(value);
+	});
+});
+
+function startTimer() {
+	if (timerSubscription) {
+		timerSubscription.unsubscribe();
+	}
+
+	timeRemaining = 120;
+	timeTick$.next(timeRemaining);
+
+	timerSubscription = interval(1000).subscribe(() => {
+		timeRemaining--;
+		timeTick$.next(timeRemaining);
+
+		if (timeRemaining <= 0) {
+			timerSubscription.unsubscribe();
+			gameLostMutations$.next(true);
+		}
+	});
+}
+
+export function stopTimer() {
+	if (timerSubscription) {
+		timerSubscription.unsubscribe();
+		timerSubscription = null;
+	}
+}

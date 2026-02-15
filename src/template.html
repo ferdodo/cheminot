@@ -1,7 +1,9 @@
-<cookies-panel>
-	<cookies-h1> Cheminot </cookies-h1>
+<crumbs-panel>
+	<crumbs-h1> Cheminot </crumbs-h1>
 
-	<cookies-p> Fermez le chemin de fer en orientant les rails. </cookies-p>
+	<crumbs-p> Fermez le chemin de fer en orientant les rails. </crumbs-p>
+
+	<timer-component></timer-component>
 
 	<div class="playground" :style="`width: clamp(10rem, 60vh, 40rem); height: clamp(10rem, 60vh, 40rem); display: grid; grid-template-columns: repeat(${ puzzle().block.w }, 1fr); grid-template-rows: repeat(${ puzzle().block.h }, 1fr);`">
 		<template v-for="line of puzzle().lines">
@@ -21,10 +23,16 @@
 		</template>
 	</div>
 
-	<div v-if="win">
-		<cookies-p style="text-align:center">
-			🎉 C'est gagné pour aujourd'hui ! 🥳 <br>
-			<cookies-button title="Copier dans le presse-papier" @click="share()"> Partager </cookies-button>
-		</cookies-p>
+	<div v-if="lost">
+		<crumbs-p style="text-align:center">
+			😢 Partie perdue - Temps écoulé! ⏱️
+		</crumbs-p>
 	</div>
-</cookies-panel>
+
+	<div v-if="win && !lost">
+		<crumbs-p style="text-align:center">
+			🎉 C'est gagné pour aujourd'hui ! 🥳 <br>
+			<crumbs-button title="Copier dans le presse-papier" @click="share()"> Partager </crumbs-button>
+		</crumbs-p>
+	</div>
+</crumbs-panel>
